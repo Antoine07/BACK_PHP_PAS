@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ResultController!
+{% endblock %}
+
+{% block body %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+	<div class="flex space-x-4 mb-6">
+		<h1>{{ result | message  }}</h1>
+        <p>
+        {% if pastries %}
+        {% for pastry in pastries %}
+            <span>{{ pastry.name}} - Calory : {{ pastry.calory }}</span>
+        {% endfor %}
+        {% endif %}
+        </p>
+		<button class="bg-blue-500 text-white px-4 py-2 rounded" >
+			<a href="{{path('app_game')}}">Rejoué</a>
+		</button>
+	</div>
+{% endblock %}

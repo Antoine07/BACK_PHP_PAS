@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GameController!
+{% endblock %}
+
+{% block body %}
+	{{ form_start(form) }}
+	<div class="flex space-x-4 mb-6">
+		<p>{{counter}}</p>
+		 {% for dice in dices %}
+            <div class="w-12 h-12 bg-gray-300 flex items-center justify-center text-xl font-bold rounded">{{dice}}</div>
+	    {% endfor %}
+	</div>
+	<button id="roll-dice" class="bg-blue-500 text-white px-4 py-2 rounded">Lancer les dés</button>
+	{{ form_end(form) }}
+{% endblock %}

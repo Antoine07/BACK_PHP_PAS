@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+OLD/
+vendor/
+MongoDocker/
+node_modules/
+Exercices_prof/
+Examples_prof/
+Challenge/
+Corrections_prof/
