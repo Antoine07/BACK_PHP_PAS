@@ -15,3 +15,59 @@ print(count);
  Affichez également le nom, les scores et les coordonnées GPS de ces restaurants. Ordonnez les résultats par ordre décroissant sur les noms des restaurants.
 
 */
+
+db.restaurants.find(
+    {
+        $and : [
+        { cuisine : "Italian"},
+        { "grades.score" : 10 }
+        ]
+    },
+    {
+        _id : 0,
+        "grades.score"  : 1
+    }
+)
+
+db.restaurants.find(
+    {
+        $and : [
+        { cuisine : "Italian"},
+        { "grades.score" : 10 }
+        ]
+    },
+    {
+        _id : 0,
+        "grades.score"  : 1,
+        name : 1
+    }
+).sort({ name : -1 })
+
+// Nombre de restaurants 
+db.restaurants.find(
+    {
+        $and : [
+        { cuisine : "Italian"},
+        { "grades.score" : 10 }
+        ]
+    },
+    {
+        _id : 0,
+        "grades.score"  : 1
+    }
+).count()
+
+// Combien de restaurant(s) Italian qui n'ont jamais obtenu de score 10 ? 
+
+db.restaurants.find(
+    {
+        $and : [
+        { cuisine : "Italian"},
+        { "grades.score" : { $not : { $eq : 10 }} }
+        ]
+    },
+    {
+        _id : 0,
+        "grades.score"  : 1
+    }
+)
