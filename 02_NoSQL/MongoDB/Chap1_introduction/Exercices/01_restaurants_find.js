@@ -70,4 +70,30 @@ db.restaurants.find(
         _id : 0,
         "grades.score"  : 1
     }
-)
+).count()
+
+// ou sinon on calcule la différence suivante 
+let totalItalianResScore10 = db.restaurants.find(
+    {
+        $and : [
+        { cuisine : "Italian"},
+        { "grades.score" : 10 }
+        ]
+    },
+    {
+        _id : 0,
+        "grades.score"  : 1
+    }
+).count()
+
+let totalRestaurantItalian = db.restaurants.find(
+    {
+       cuisine : "Italian"
+    },
+    {
+        _id : 0,
+        "grades.score"  : 1
+    }
+).count()
+
+print(totalRestaurantItalian - totalItalianResScore10);
