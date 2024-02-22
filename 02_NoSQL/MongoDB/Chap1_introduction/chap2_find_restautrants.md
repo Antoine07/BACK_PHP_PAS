@@ -250,7 +250,7 @@ Indications : pour itérer sur une requête vous utiliserez l'une des deux synta
 Puis comparez le résultat avec la méthode count :
 
 ```js
-db.collection.findOne(query, restriction).count();
+db.collection.findOne(query, restriction).countDocuments();
 ```
 
 ### Présentation des opérateurs MongoDB pour le filtrage des données
