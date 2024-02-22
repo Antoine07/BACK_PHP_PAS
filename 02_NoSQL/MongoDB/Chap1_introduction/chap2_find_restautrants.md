@@ -225,13 +225,8 @@ Analysez la requête suivante sans l'exécuter dans MongoDB. Et expliquez ce qu'
 Voici un exemple de condition logique en utilisant OR et AND. Remarquez le deuxième argument de la méthode find, il permet de faire une projection, c'est-à-dire de sélectionner uniquement certaine(s) propriété(s) du document :
 
 ```js
-db.restaurants.find(
-  {
-    borough: "Brooklyn",
-    $or: [{ name: /^B/ }, { name: /^W/ }],
-  },
-  { name: 1, borough: 1 }
-);
+// sort ordonne par ordre décroissant les nom name : -1, mane : 1
+db.restaurants.find( { borough: "Brooklyn", $or: [{ name: /^B/ }, { name: /^W/ }] }, { _id : 0, name: 1 } ).sort({ name : -1 } ) 
 ```
 
 Cela correspondrait (...) en SQL à la requête suivante :
