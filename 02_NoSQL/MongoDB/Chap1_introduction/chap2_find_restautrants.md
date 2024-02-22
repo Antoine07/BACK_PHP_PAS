@@ -242,7 +242,7 @@ AND ( `name` LIKE '/^B/' OR `name` LIKE '/^W/')
 
 ## 02 Exercice compter le nombre de restaurants
 
-Sans utiliser la méthode count dans un premier temps comptez le nombre de restaurants dans le quartier de Brooklyn.
+Sans utiliser la méthode countDocuments dans un premier temps comptez le nombre de restaurants dans le quartier de Brooklyn.
 
 Indications : pour itérer sur une requête vous utiliserez l'une des deux syntaxes suivantes :
 
