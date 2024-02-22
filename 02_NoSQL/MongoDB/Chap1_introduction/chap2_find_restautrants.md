@@ -205,7 +205,7 @@ db.restaurants.find({ borough: "Brooklyn", cuisine: "Hamburgers" });
 
 // De manière équivalente
 db.restaurants.find({
-  $and: [{ borough: "Brookyn" }, { cuisine: "Hamburgers" }],
+  $and: [{ borough: "Brooklyn" }, { cuisine: "Hamburgers" }],
 });
 ```
 
