@@ -38,8 +38,6 @@ if ($action === 'coffee') {
         ]
     ];
 
-    $options = [];
-
     $result = $collection->find($filter, $projection);
     $response->setContent(json_encode(["restaurants" => $result->toArray()]));
 }
