@@ -119,9 +119,9 @@ db.inventory.insertMany( [{
 
 ## 01 Exercices liste inventory
 
-### 01. Affichez tous les articles de type journal. Et donnez la quantité total de ces articles (propriété qty). Pensez à faire un script en JS.
+### 01. Affichez tous les articles de type journal. Et donnez la quantité total de ces articles (propriété qty).
 
-### 02. Affichez les noms de sociétés depuis 2018 avec leur quantité (sans agrégation)
+### 02. Affichez les noms de sociétés depuis 2018 avec leur quantité (sans agrégation).
 
 ### 03. Affichez les types des articles pour les sociétés dont le nom commence par A.
 
