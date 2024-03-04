@@ -1,10 +1,10 @@
 # Installation
 
-⛅ Cours Symfony 
+⛅ Cours Symfony 7
 
 Pour utiliser Symfony il faut :
 
--  PHP 8.1 intl, pdo_mysql, xsl, amqp, gd, openssl, sodium ou plus & les extensions suivantes :
+-  PHP 8.2 intl, pdo_mysql, xsl, amqp, gd, openssl, sodium ou plus & les extensions suivantes :
  curl et zip.
 
  *Dans votre configuration MAMP ou WAMP, cela devrait être le cas.*
@@ -81,23 +81,23 @@ symfony check:requirements
 
 ## Installation 
 
-Sur votre bureau dans un dossier **web-trainer** tapez dans la console la ligne de commande suivante :
+Sur votre bureau dans un dossier **pastry** tapez dans la console la ligne de commande suivante :
 
 🚀
 
 ```bash
-symfony new web-trainer
+symfony new pastry
 ```
 
-Avec composer uniquement, vous pourvez taper la ligne de commande suivante ( dans le dossier web-trainer) :
+Avec composer uniquement, vous pourvez taper la ligne de commande suivante ( dans le dossier pastry) :
 
 🚀
 
 ```bash
-composer create-project symfony/skeleton web-trainer
+composer create-project symfony/skeleton pastry
 ```
 
-Vérifiez la configuration, placez-vous dans le dossier **web-trainer** et tapez la ligne de commande suivante (commandes SF) :
+Vérifiez la configuration, placez-vous dans le dossier **pastry** et tapez la ligne de commande suivante (commandes SF) :
 
 🚀
 
@@ -160,17 +160,17 @@ dev-trainer/
 ├─ src/
 │  ├─ Kernel.php
 │  ├─ Command/
-│  ├─ Controller/   <- Chef d'orechestres
+│  ├─ Controller/   <- Chefs d'orechestres
 │  ├─ DataFixtures/ <- Données d'exemple
 │  ├─ Entity/       <- Les modèles qui représentent les tables
 │  ├─ EventSubscriber/
 │  ├─ Form/
-│  ├─ Repository/   <- Requête personnalisées 
+│  ├─ Repository/   <- Requêtes personnalisées 
 │  ├─ Security/
 │  └─ Twig/         <- Les extensions Twig
 ├─ templates/       <- Les templates Twig
-├─ tests/
-├─ translations/    <- Fichiers de traduction
+├─ tests/           <- PHPunit pour faire les tests unitaires
+├─ translations/    <- Fichiers de traduction de langue
 ├─ var/
 │  ├─ cache/
 │  └─ log/
@@ -197,85 +197,9 @@ Ce dossier contient toutes les dépendances de votre application comme Symfony p
 - public/
 *Dans ce dossier est placé tous les fichiers accessibles publiquement assets, js et le point d'entrée de votra application l'index.php*
 
-## Schéma Symfony 
-
-```mermaid
-graph LR;
-subgraph symfony
-
-    subgraph src
-        subgraph Entity
-            M2(Article.php)
-            M3(Trainer.php)
-        end
-        subgraph Controller
-            C1(HomeController)
-            C2(BlogController)
-            C3(TrainersController)
-        end
-    end
-
-    subgraph templates
-        subgraph home
-            V1(index.html.twig)
-        end
-        subgraph blog
-            V2(index.html.twig)
-        end
-        subgraph trainers
-            V3(index.html.twig)
-        end
-        V4(base.html.twig)
-    end
-
-    subgraph public
-        Router[index.php]
-    end
-
-end
-
-subgraph legend
-    style LS2 stroke:#f00,stroke-width:3px;
-    LS2([Model])
-    style LS1 stroke:#0f0,stroke-width:3px;
-    LS1([View])
-    style LS3 stroke:#00f,stroke-width:3px;
-    LS3([Controller])
-    style LS4 stroke:#AE46FA,stroke-width:3px;
-    LS4([Router])
-end
-
-CL(Client)
-
-Controller <--> Router
-M2 <--> |datas|C2
-M3 <--> |datas|C3
-V1 --> C1
-V2 --> C2
-V3 --> C3
-V4 --> Controller
-Router <-->|HTTP| CL
-
-classDef border stroke-width: 7px;
-templates:::border
-Entity:::border
-Controller:::border
-public:::border
-style templates stroke:#0f0
-style Entity stroke:#f00
-style Controller stroke:#00f
-style public stroke:#AE46FA
-```
-
-## Le projet fil rouge pour la semaine Web tainer
-
-Nous allons créer une application qui présente une petite équipe de formateurs. Chaque formateur aura sa propre page et écrit des articles. La page d'accueil affichera plus tard les articles les plus recents ou événements importants. 
-
-Nous vous guiderons dans l'implémentation de l'ensemble des features, sur l'ensemble des cours SF, pour expliciter les notions importantes de ce Framework.
-
 ### Installation
 
-Déjà vu plus haut.
+:pill: Déjà vu plus haut.
 
 ### Création du contrôleur HomeController
 
@@ -579,149 +503,100 @@ Remarque : pour connaitre la version de Twig que vous utilsiez voyez le fichier 
 "symfony/twig-bundle": "7.0.*",
 ```
 
-## 03 Affichez les données trainers
+## 03 Affichez les données pastries
 
 En utilsant ce que l'on a vu dans le cours avec le contrôleur et la vue.
 
-1. Affichez les données ci-dessous dans la page trainer.
+1. Affichez les données ci-dessous dans la page pastry.
 1. Créez une mise en forme avec les styles CSS du Framework css Tailwind.
-Chaque trainer sera dans un div stylisé (css du framework).
-1. Ordonnez décroissant les trainers en fonction de leur nombre d'étoiles.
-1. Ajoutez un style spécifique pour étoiles.
+Chaque pastry sera dans un div stylisé (css du framework).
+1. Ordonnez décroissant les pastries en fonction de leur nombre d'étoiles.
+1. Ajoutez un style spécifique pour les étoiles.
 1. Nous avons ajouté un champ rates qui comporte maintenant des valeurs; faite la moyenne des rates, si cette donnée existe. Utilisez les conditions en Twig pour afficher cette informaation dans la page.
 1. Créez maintenant un menu main-menu.html.twig qui sera présent sur toutes les pages, faites un include comme vu dans le cours plus haut.
 
 ```php
-$trainers = [
+$pastries = [
     [
-        'name' => 'Alice Johnson',
-        'address' => '123 Oak Street',
-        'phone' => '555-1111',
-        'star' => 4,
-        'rates' => [11, 18, 10, 7 ]
+        "id" => "1",
+        "name" => "Fondant supreme",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 4,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [4.2, 4.5, 3.8], 
+        "stars" => 4
     ],
     [
-        'name' => 'Bob Smith',
-        'address' => '456 Pine Avenue',
-        'phone' => '555-2222',
-        'star' => 25,
-        'rates' => [13, 10, 7, 7.5, 19, 20, 17 ]
+        "id" => "2",
+        "name" => "Cake tout Chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 3,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [3.5, 4.0, 4.2],
+        "stars" => 3
     ],
     [
-        'name' => 'Charlie Davis',
-        'address' => '789 Maple Lane',
-        'phone' => '555-3333',
-        'star' => 1
+        "id" => "3",
+        "name" => "Cake Framboise chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 4,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [4.0, 3.8, 4.5],
+        "stars" => 5
     ],
     [
-        'name' => 'David Wilson',
-        'address' => '234 Cedar Road',
-        'phone' => '555-4444',
-        'star' => 40
+        "id" => "4",
+        "name" => "Brioche sucrée avec chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantityWon" => 0,
+        "quantity" => 3,
+        "choice" => false,
+        "ratings" => [3.2, 3.5, 4.0],
+        "stars" => 2
     ],
     [
-        'name' => 'Eva Martin',
-        'address' => '567 Birch Boulevard',
-        'phone' => '555-5555',
-        'star' => 5
+        "id" => "5",
+        "name" => "Cake glacé fondant au chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 2,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [3.8, 4.2, 4.5],
+        "stars" => 4
     ],
     [
-        'name' => 'Frank Miller',
-        'address' => '890 Walnut Drive',
-        'phone' => '555-6666',
-        'star' => 7
+        "id" => "6",
+        "name" => "Eclairs au chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 5,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [4.5, 4.0, 3.8],
+        "stars" => 1
     ],
     [
-        'name' => 'Grace Turner',
-        'address' => '345 Sycamore Street',
-        'phone' => '555-7777',
-        'star' => 14,
-        'rates' => [1, 9, 5, 9, 10, 20, 20 ]
+        "id" => "7",
+        "name" => "Tarte poire chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 5,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [4.2, 4.5, 3.8],
+        "stars" => 3
     ],
     [
-        'name' => 'Henry Harris',
-        'address' => '678 Redwood Avenue',
-        'phone' => '555-8888',
-        'star' => 15
+        "id" => "8",
+        "name" => "Banana au chocolat",
+        "image" => "http://placehold.it/32x32",
+        "quantity" => 3,
+        "quantityWon" => 0,
+        "choice" => false,
+        "ratings" => [3.5, 4.0, 4.2],
+        "stars" => 5
     ],
-    [
-        'name' => 'Ivy White',
-        'address' => '901 Pine Lane',
-        'phone' => '555-9999',
-        'star' => 8
-    ],
-    [
-        'name' => 'Jack Turner',
-        'address' => '123 Elm Road',
-        'phone' => '555-0000',
-        'star' => 2
-    ],
-    // Ajoutez d'autres trainers avec des noms fictifs
 ];
 
 ```
-
-## 05 Exercice Wireframes 
-
-1. Réinstallez un projet SF trainer sur votre machine avec la configuration que nous avons faite dans le cours.
-
-1. Introduction au projet fil rouge.  
-
-Vous allez réaliser une page princiaple sur deux colonnes, en utilisant **Tailwindcss** ou vos propres framework css, voyez le Wireframe ci-dessous.
-
-Bien sûr vous allez utiliser Twig pour réaliser chacune des intégrations. Aidez-vous de la documentation officiel.
-
-On ne vous demande pas de faire un maquettage graphique du projet, utilisez les wireframes ci-dessous et surtout un Framework CSS pour intégrer les pages.
-
-1. Dans le cas où vous voulez changer de Framework CSS voyez la documentation en ligne : [assetmapper](https://symfony.com/doc/current/frontend/asset_mapper.html)
-
-1. Si vous utilisez Tailwindcss ou un autre Framework CSS utilisez la documentation suivante : [tailwindcss](https://tailwindcss.com/docs/installation)
-
-1. Nous allons construire l'arborescence suivante.
-
-```mermaid
-graph TD
-  A[Home] -->|Contenu Home| B(Trainers)
-  A -->|Contenu Home| C(Blog)
-  A -->|Contenu Home| D(Contact)
-  A -->|Contenu Home| E(Create count)
-  B -->|Liste des trainers| EE(Bob)
-  B -->|Liste des trainers| FF(Alan)
-  B -->|Liste des trainers| GG(John)
-  B -->|Liste des trainers| HH(Alice)
-```
-
-- Intégrez la page ci-dessus ( simplement en CSS)
-
-🚧 
-
-1. Créez le controller Trainer
-1. Créez le controller Blog
-1. Créez le controller Contact
-
-Pour les modèles, voir : [wireframe](###Wireframes)
-
-### Détails des différentes pages à réaliser
-
-
-1. Home (page d'accueil) : Elle répertoriera les derniers feedbacks rédigés par les formateurs, des cours réalisés. L'aspect fonctionnel de cette page sera mis en œuvre ultérieurement lors de la création de la base de données.
-
-1. Trainers : Elle présentera la liste des formateurs ainsi que leurs compétences.
-
-1. Blog : Il affichera les articles rédigés par les formateurs, offrant parfois la possibilité de laisser des commentaires sur certaines publications.
-
-1. Contact : Elle fournira des informations sur la manière de contacter la société.
-
-### Wireframes
-
-1. home page
-
-![homepage](./images/wireframe_DevTrainer_home.png)
-
-1. Trainers
-
-![trainers](./images/wireframe_DevTrainer_trainers.png)
-
-1. Contact
-
-![contact](./images/wireframe_DevTrainer_contact.png)

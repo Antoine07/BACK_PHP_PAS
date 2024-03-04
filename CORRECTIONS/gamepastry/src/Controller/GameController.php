@@ -5,18 +5,37 @@ namespace App\Controller;
 use App\Service\Yams;
 use App\Form\Model\Dice;
 use App\Form\Type\DiceType;
+use App\Entity\User;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class GameController extends AbstractController
 {
     #[Route('/game', name: 'app_game')]
-    public function index(Request $request, Yams $yams, SessionInterface $session): Response
-    {
+    public function index(
+        Request $request,
+        Yams $yams,
+        SessionInterface $session,
+        UserPasswordHasherInterface $hasher,
+        EntityManagerInterface $em
+    ): Response {
+
+        // $user = new User();
+        // $user->setUsername('alice')
+        //     ->setEmail('alice@alice.fr')
+        //     ->setPassword($hasher->hashPassword($user, 'alice'))
+        //     ->setRoles([]);
+        // $em->persist($user) ;
+        // $em->flush() ;
+
+        $this->denyAccessUnlessGranted('ROLE_USER');
         // has méthode pour tester si la variable dans les sessions existes set et get méthodes sur le service Session
         $dices = $session->has('dices') ? $session->get('dices') :  [0, 0, 0, 0, 0];
 
@@ -33,7 +52,7 @@ class GameController extends AbstractController
 
         // METHOD POST
         if ($form->isSubmitted()) {
-            
+
             // récupération des 5 dés
             $dices = $yams->playDices();
             // enregistre en session
@@ -43,10 +62,10 @@ class GameController extends AbstractController
             $result = $yams->game($dices);
 
             // On 5 chances / parties on décrémente à chaque tour
-            $session->set('counter', $counter - 1 ) ;
+            $session->set('counter', $counter - 1);
 
             // on a fait tous les coups 
-            if( $counter == 0 ) return $this->redirectToRoute('app_result');
+            if ($counter == 0) return $this->redirectToRoute('app_result');
 
             // On peut rejouer 
             if ($result == 0)

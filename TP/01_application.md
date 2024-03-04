@@ -15,15 +15,15 @@ Pour la partie graphique vous libre d'utiliser un framework CSS de votre choix.
 - **Un Carré :** Gagne 3 pâtisseries.
 - **La grande suite :** Gagne 1 pâtisserie.
 
-1. Créez le test qui testera le service pour le jeu.
+1. Créez le test qui testera le service Yams pour le jeu.
 
 1. Une fois gagné vous serez redirigé vers la page résultat qui affichera la liste des pâtisseries gagnées.
 
 1. Créez une méthode dans le repository PastryRepository permettant d'obtenir de manière aléatoire le nombre de pâtisserie(s) gagnée(s).
 
-1. Créez un filtre Twig affichant les messages suivants en fonction du nombre de pâtisserie(s) gagnée(s).
+2. Créez un filtre Twig affichant les messages du jeu en fonction du nombre de pâtisserie(s) gagnée(s).
    
-1. Ajoutez un bouton permettant de revenir au jeu en ré-initialisant celui-ci.
+3. Ajoutez un bouton permettant de revenir au jeu en ré-initialisant celui-ci.
 
 ## Partie 2 : Facultative
 

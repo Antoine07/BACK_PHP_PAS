@@ -10,11 +10,13 @@ Assurez-vous d'avoir installé les dépendances nécessaires :
 
 ### Étape 2: Création du projet
 
+:rocket: Les deux dépendances **mongodb** et **http-foundation** sont nécessaires pour transmettre nos requêtes à MongoDB et pour gérer les requêtes HTTP ainsi que les réponses en JSON.
+
 ```bash
 # Créez un nouveau projet
 composer init
 
-# Installez les dépendances nécessaires
+# Installez les dépendances 
 composer require mongodb/mongodb symfony/http-foundation
 ```
 
@@ -22,8 +24,8 @@ composer require mongodb/mongodb symfony/http-foundation
 
 ```
 - api/
-  - bootstrap.php
-  - api.php
+  - index.php
+- bootstrap.php
 - vendor/
   (répertoire généré par Composer)
 - composer.json
@@ -46,13 +48,13 @@ $collection = $client->ny->restaurants;
 
 ### Étape 5: API avec Symfony HTTP Foundation
 
-Créez un fichier `api.php` pour définir votre API :
+Créez un fichier `index.php` pour définir votre API :
 
 ```php
 // api.php
-
 require_once __DIR__ . '/../bootstrap.php';
 
+// utilisation d'une dépandance Symfony pour gérer les requêtes
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -61,28 +63,28 @@ $action = $request->query->get('action');
 
 $response = new Response();
 
+// traitement des actions de l'API
 if ($action == 'all') {
+    $cursor = $collection->find(
+        [
+          'cuisine' => 'Italian',
+        ],
+        [
+          'limit' => 5,
+          'projection' => [
+              'name' => 1,
+              '_id' => 0
+          ],
+        ]
+    );
 
     $response->setContent(json_encode([
-        'data' => '',
+        'data' => $cursor->toArray();
     ]));
 }
-
-if ($action == 'averageScore') {
-    $pipeline = [
-      
-
-    ];
-
-    $collection->aggregate($pipeline)->toArray();
-
-    $response->setContent(json_encode([
-        'data' => $collection->aggregate($pipeline)->toArray();
-    ]));
-}
-
+// la réponse est un JSON à préciser pour l'envoi des données au navigateur
 $response->headers->set('Content-Type', 'application/json');
-
+// on envoit les données 
 $response->send();
 ```
 
@@ -96,10 +98,12 @@ Adaptez ce tutoriel en fonction de vos besoins spécifiques et de votre structur
 
 ## Étape 7: Les requêtes en fonction des routes
 
+Toutes les requêtes seront limitées à 10 par défaut, paramètre à préciser dans l'action.
+
 ### Lire tous les restaurants
 
 #### Endpoint
-GET /api.php?action=getRestaurants
+GET /index.php?action=all&limit=10
 
 #### Réponse
 Retourne la liste de tous les restaurants au format JSON.
@@ -107,10 +111,10 @@ Retourne la liste de tous les restaurants au format JSON.
 ### Lire un restaurant par ID
 
 #### Endpoint
-GET /api.php?action=restaurants&id={restaurant_id}
+GET /index.php?action=cusine&name=(name)limit=10
 
 #### Paramètres
-- {id}: ID du restaurant à récupérer (obligatoire)
+- {name}: type de restaurant à récupérer (obligatoire)
 
 #### Réponse
 Retourne les détails du restaurant spécifié au format JSON.
@@ -118,8 +122,39 @@ Retourne les détails du restaurant spécifié au format JSON.
 ## Restaurants par quartier
 
 ### Endpoint
-GET /api.php?action=restaurantsByBorough
+GET /index.php?action=restaurantsByBorough
 
 ### Réponse
 Retourne le nombre total de restaurants par quartier au format JSON.
 
+## Restaurants par quartier
+
+### Endpoint
+GET /index.php?action=restaurantsByBorough
+
+### Réponse
+Retourne le nombre total de restaurants par quartier au format JSON.
+
+## Nombre de restaurants dans le dataset 
+
+### Endpoint
+GET /index.php?action=count
+
+### Réponse
+Retourne le nombre total de restaurants au format JSON.
+
+## Moyenne des scores par quartier
+
+### Endpoint
+GET /index.php?action=averageByBorough
+
+### Réponse
+Retourne le nombre total de restaurants au format JSON.
+
+## Coffee restaurants
+
+### Endpoint
+GET /index.php?action=regex&name=coffee
+
+### Réponse
+Retourne les restaurants qui ont dans leur nom coffee
